@@ -1,0 +1,130 @@
+@use '../styles/partials/variables' as *;
+@use '../styles/partials/mixins' as *;
+
+.assignment-card {
+  @include glass-card;
+  @include flex-col;
+  padding: $space-6;
+  cursor: pointer;
+  gap: $space-4;
+  animation: fadeIn 0.4s ease both;
+  position: relative;
+  overflow: hidden;
+  transition: $transition-normal;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $color-accent, transparent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  &--completed {
+    border-color: rgba($color-success, 0.25);
+    background: linear-gradient(135deg, $color-surface 80%, rgba($color-success, 0.04));
+
+    &::before {
+      background: linear-gradient(90deg, transparent, $color-success, transparent);
+      opacity: 0.5;
+    }
+  }
+
+  &__completed-ribbon {
+    position: absolute;
+    top: $space-3;
+    right: -$space-1;
+    background: $color-success;
+    color: #0b0e1a;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    font-family: $font-display;
+    padding: $space-1 $space-3;
+    border-radius: $radius-sm;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 8px rgba($color-success, 0.3);
+  }
+
+  &:hover, &:focus-visible {
+    border-color: $color-border-bright;
+    transform: translateY(-3px);
+    box-shadow: $shadow-lg, 0 0 20px rgba($color-accent, 0.06);
+
+    &::before { opacity: 1; }
+
+    .assignment-card__cta {
+      color: $color-accent;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  &--completed:hover {
+    box-shadow: $shadow-lg, 0 0 20px rgba($color-success, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+
+  &__header {
+    @include flex-between;
+    gap: $space-2;
+  }
+
+  &__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    filter: saturate(0.8);
+  }
+
+  &__badges {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  &__body {
+    @include flex-col;
+    gap: $space-2;
+    flex: 1;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    line-height: 1.3;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: $space-3;
+    border-top: 1px solid $color-border;
+  }
+
+  &__cta {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    font-family: $font-display;
+    color: $color-text-faint;
+    transition: $transition-fast;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}

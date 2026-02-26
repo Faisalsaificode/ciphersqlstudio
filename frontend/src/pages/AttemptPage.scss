@@ -1,0 +1,330 @@
+@use '../styles/partials/variables' as *;
+@use '../styles/partials/mixins' as *;
+
+.attempt-page {
+  @include flex-col;
+  height: calc(100vh - $topbar-height);
+  overflow: hidden;
+
+  &--loading, &--error {
+    @include flex-col;
+    @include flex-center;
+    gap: $space-5;
+    height: 60vh;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+  }
+
+  // --- Top bar ---
+  &__topbar {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    padding: $space-3 $space-6;
+    border-bottom: 1px solid $color-border;
+    background: $color-surface;
+    flex-shrink: 0;
+
+    @include mobile {
+      padding: $space-3 $space-4;
+      flex-wrap: wrap;
+      gap: $space-2;
+    }
+  }
+
+  &__title-group {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+  }
+
+  &__completed-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: $space-1 $space-3;
+    background: $color-success-bg;
+    color: $color-success;
+    border: 1px solid rgba($color-success, 0.3);
+    border-radius: $radius-full;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    font-family: $font-display;
+    letter-spacing: 0.04em;
+    animation: fadeIn 0.3s ease;
+  }
+
+  // --- Workspace ---
+  &__workspace {
+    display: grid;
+    grid-template-columns: $sidebar-width 1fr;
+    flex: 1;
+    overflow: hidden;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      overflow: auto;
+    }
+
+    @include tablet {
+      grid-template-columns: 280px 1fr;
+    }
+  }
+
+  // --- Sidebar ---
+  &__sidebar {
+    @include flex-col;
+    border-right: 1px solid $color-border;
+    overflow-y: auto;
+    background: $color-surface;
+    gap: $space-4;
+    padding: $space-4;
+    @include custom-scrollbar;
+
+    @include mobile {
+      border-right: none;
+      border-bottom: 1px solid $color-border;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+  }
+
+  &__panel-tabs {
+    display: flex;
+    border-bottom: 1px solid $color-border;
+    flex-shrink: 0;
+    margin: 0 (-$space-4);
+    padding: 0 $space-4;
+    gap: $space-1;
+  }
+
+  &__panel-tab {
+    padding: $space-2 $space-3;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    font-family: $font-body;
+    color: $color-text-muted;
+    cursor: pointer;
+    transition: $transition-fast;
+    min-height: 36px;
+
+    &:hover { color: $color-text; }
+
+    &--active {
+      color: $color-accent;
+      border-bottom-color: $color-accent;
+    }
+  }
+
+  // --- Main area ---
+  &__main {
+    @include flex-col;
+    overflow: hidden;
+  }
+}
+
+// --- Question panel ---
+.question-panel {
+  @include glass-card($color-surface-2);
+  overflow: hidden;
+  flex-shrink: 0;
+
+  &__header {
+    padding: $space-3 $space-4;
+    background: rgba($color-accent, 0.05);
+    border-bottom: 1px solid rgba($color-accent, 0.15);
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    font-family: $font-display;
+    color: $color-accent;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__body {
+    @include flex-col;
+    gap: $space-4;
+    padding: $space-4;
+  }
+
+  &__question {
+    font-size: $font-size-sm;
+    color: $color-text;
+    line-height: 1.7;
+  }
+
+  &__requirements {
+    @include flex-col;
+    gap: $space-2;
+  }
+
+  &__req-label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $color-text-faint;
+    font-family: $font-display;
+  }
+
+  ul {
+    @include flex-col;
+    gap: $space-2;
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: $space-2;
+      font-size: $font-size-xs;
+      color: $color-text-muted;
+      line-height: 1.5;
+    }
+  }
+
+  &__req-check {
+    color: $color-success;
+    font-weight: $font-weight-bold;
+    flex-shrink: 0;
+    font-size: $font-size-xs;
+  }
+}
+
+// --- Editor panel ---
+.editor-panel {
+  @include flex-col;
+  flex: 1;
+  border-bottom: 1px solid $color-border;
+  min-height: 200px;
+  overflow: hidden;
+
+  &__header {
+    @include flex-between;
+    padding: $space-2 $space-4;
+    background: $color-surface-2;
+    border-bottom: 1px solid $color-border;
+    flex-shrink: 0;
+    gap: $space-3;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &--red    { background: #ff5f57; }
+    &--yellow { background: #febc2e; }
+    &--green  { background: #28c840; }
+  }
+
+  &__label {
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    margin-left: $space-2;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__shortcut {
+    font-size: $font-size-xs;
+    color: $color-text-faint;
+    font-family: $font-mono;
+
+    @include mobile { display: none; }
+  }
+
+  &__editor {
+    flex: 1;
+    overflow: hidden;
+  }
+}
+
+// --- Results panel ---
+.results-panel {
+  @include flex-col;
+  flex: 0 0 240px;
+  overflow: hidden;
+
+  @include desktop {
+    flex: 0 0 280px;
+  }
+
+  &__header {
+    @include flex-between;
+    padding: $space-2 $space-4;
+    background: $color-surface-2;
+    border-bottom: 1px solid $color-border;
+    flex-shrink: 0;
+    gap: $space-3;
+    flex-wrap: wrap;
+  }
+
+  &__header-right {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__title {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    font-family: $font-display;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $color-text-muted;
+  }
+
+  &__badge {
+    padding: $space-1 $space-2;
+    background: $color-success-bg;
+    color: $color-success;
+    border-radius: $radius-sm;
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    font-weight: $font-weight-medium;
+  }
+
+  &__submitted {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    color: $color-success;
+    font-family: $font-display;
+    letter-spacing: 0.04em;
+  }
+
+  &__submit-msg {
+    margin: $space-2 $space-4;
+    font-size: $font-size-xs;
+    animation: fadeIn 0.3s ease;
+  }
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+    @include flex-col;
+  }
+}

@@ -1,0 +1,128 @@
+@use '../styles/partials/variables' as *;
+@use '../styles/partials/mixins' as *;
+
+.results-table {
+  @include flex-col;
+  height: 100%;
+  min-height: 120px;
+  background: $color-surface;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  &--loading, &--empty, &--error {
+    @include flex-center;
+    gap: $space-3;
+    flex: 1;
+    padding: $space-8;
+  }
+
+  &--loading {
+    @include flex-col;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+  }
+
+  &--error {
+    background: $color-error-bg;
+    align-items: flex-start;
+    gap: $space-4;
+    padding: $space-5;
+  }
+
+  &__error-icon {
+    font-size: 1.5rem;
+    color: $color-error;
+    flex-shrink: 0;
+  }
+
+  &__error-title {
+    font-weight: $font-weight-semibold;
+    color: $color-error;
+    margin-bottom: $space-1;
+  }
+
+  &__error-msg {
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: lighten($color-error, 20%);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+  }
+
+  &__placeholder {
+    font-size: $font-size-sm;
+    color: $color-text-faint;
+    font-family: $font-mono;
+  }
+
+  &__meta {
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $color-border;
+    background: $color-surface-2;
+    flex-shrink: 0;
+  }
+
+  &__count {
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    color: $color-success;
+    font-weight: $font-weight-medium;
+  }
+
+  &__truncated {
+    color: $color-warning;
+  }
+
+  &__scroll {
+    overflow: auto;
+    flex: 1;
+    @include custom-scrollbar;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    padding: $space-3 $space-4;
+    text-align: left;
+    background: rgba($color-accent, 0.06);
+    color: $color-accent;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid rgba($color-accent, 0.2);
+    white-space: nowrap;
+    font-family: $font-display;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $color-border;
+    transition: background 0.1s;
+
+    &:hover { background: rgba($color-accent, 0.03); }
+    &:last-child { border-bottom: none; }
+  }
+
+  tbody td {
+    padding: $space-3 $space-4;
+    color: $color-text;
+    white-space: nowrap;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__null {
+    color: $color-text-faint;
+    font-style: italic;
+    font-size: $font-size-xs;
+  }
+}

@@ -1,0 +1,122 @@
+@use '../styles/partials/variables' as *;
+@use '../styles/partials/mixins' as *;
+
+.sample-viewer {
+  @include flex-col;
+  @include glass-card;
+  overflow: hidden;
+
+  &__tabs {
+    display: flex;
+    border-bottom: 1px solid $color-border;
+    background: $color-surface-2;
+    overflow-x: auto;
+    @include custom-scrollbar;
+    flex-shrink: 0;
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-3 $space-5;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: $transition-fast;
+    min-height: 40px;
+
+    &:hover { color: $color-text; background: rgba($color-accent, 0.04); }
+
+    &--active {
+      color: $color-accent;
+      border-bottom-color: $color-accent;
+      background: rgba($color-accent, 0.06);
+    }
+
+    &-icon { font-size: 0.7rem; opacity: 0.6; }
+  }
+
+  &__content {
+    @include flex-col;
+    gap: $space-5;
+    padding: $space-5;
+    overflow-y: auto;
+    flex: 1;
+    @include custom-scrollbar;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    font-style: italic;
+  }
+
+  &__schema-label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $color-text-faint;
+    margin-bottom: $space-2;
+    font-family: $font-display;
+  }
+
+  &__code {
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: $color-accent-2;
+    background: rgba($color-accent-2, 0.05);
+    border: 1px solid rgba($color-accent-2, 0.15);
+    border-radius: $radius-md;
+    padding: $space-4;
+    overflow-x: auto;
+    line-height: 1.8;
+    @include custom-scrollbar;
+    white-space: pre;
+  }
+
+  &__table-wrap {
+    overflow-x: auto;
+    border-radius: $radius-md;
+    border: 1px solid $color-border;
+    @include custom-scrollbar;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+  }
+
+  thead th {
+    padding: $space-2 $space-3;
+    background: $color-surface-2;
+    color: $color-text-muted;
+    font-weight: $font-weight-bold;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid $color-border;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $color-border;
+    &:last-child { border-bottom: none; }
+    &:hover { background: rgba($color-text, 0.03); }
+  }
+
+  tbody td {
+    padding: $space-2 $space-3;
+    color: $color-text;
+    white-space: nowrap;
+  }
+}

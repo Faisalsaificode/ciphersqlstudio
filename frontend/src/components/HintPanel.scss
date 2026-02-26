@@ -1,0 +1,88 @@
+@use '../styles/partials/variables' as *;
+@use '../styles/partials/mixins' as *;
+
+.hint-panel {
+  @include flex-col;
+  gap: $space-4;
+  padding: $space-5;
+  @include glass-card($color-surface-2);
+  border-color: rgba($color-accent-2, 0.2);
+
+  &__header {
+    @include flex-between;
+    gap: $space-3;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-family: $font-display;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-sm;
+    color: $color-text;
+  }
+
+  &__icon {
+    font-size: 1.1rem;
+  }
+
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba($color-accent-2, 0.15);
+    color: $color-accent-2;
+    border-radius: 50%;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-2;
+  }
+
+  &__empty {
+    font-size: $font-size-sm;
+    color: $color-text-faint;
+    font-style: italic;
+    text-align: center;
+    padding: $space-2 0;
+  }
+
+  &__error { font-size: $font-size-sm; }
+
+  &__list {
+    @include flex-col;
+    gap: $space-3;
+    animation: fadeIn 0.3s ease;
+  }
+
+  &__item {
+    display: flex;
+    gap: $space-3;
+    padding: $space-4;
+    background: rgba($color-accent-2, 0.05);
+    border: 1px solid rgba($color-accent-2, 0.12);
+    border-radius: $radius-md;
+    animation: fadeIn 0.3s ease;
+
+    &-num {
+      font-family: $font-mono;
+      font-size: $font-size-xs;
+      color: $color-accent-2;
+      font-weight: $font-weight-bold;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    &-text {
+      font-size: $font-size-sm;
+      color: $color-text;
+      line-height: 1.6;
+    }
+  }
+}

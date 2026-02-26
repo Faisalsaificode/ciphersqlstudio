@@ -1,0 +1,243 @@
+// ============================================================
+// _components.scss  — Reusable UI components
+// ============================================================
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ---- Buttons ----
+.btn {
+  @include btn-base;
+  @include focus-ring;
+
+  &--primary {
+    background: $color-accent;
+    color: #0b0e1a;
+    &:hover:not(:disabled) {
+      background: $color-accent-dark;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba($color-accent, 0.35);
+    }
+    &:active:not(:disabled) { transform: translateY(0); }
+  }
+
+  &--secondary {
+    background: $color-surface-2;
+    color: $color-text;
+    border: 1px solid $color-border;
+    &:hover:not(:disabled) {
+      background: $color-border;
+      border-color: $color-border-bright;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $color-text-muted;
+    border: 1px solid $color-border;
+    &:hover:not(:disabled) {
+      color: $color-text;
+      border-color: $color-border-bright;
+      background: $color-surface-2;
+    }
+  }
+
+  &--hint {
+    background: rgba($color-accent-2, 0.1);
+    color: $color-accent-2;
+    border: 1px solid rgba($color-accent-2, 0.3);
+    &:hover:not(:disabled) {
+      background: rgba($color-accent-2, 0.2);
+      box-shadow: $shadow-glow-blue;
+    }
+  }
+
+  &--danger {
+    background: $color-error-bg;
+    color: $color-error;
+    border: 1px solid rgba($color-error, 0.3);
+    &:hover:not(:disabled) { background: rgba($color-error, 0.2); }
+  }
+
+  &--sm {
+    padding: $space-2 $space-3;
+    font-size: $font-size-xs;
+    min-height: 32px;
+  }
+
+  &--lg {
+    padding: $space-4 $space-8;
+    font-size: $font-size-base;
+    min-height: 48px;
+  }
+
+  &--full { width: 100%; justify-content: center; }
+
+  &--loading {
+    position: relative;
+    color: transparent !important;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      color: #0b0e1a;
+    }
+  }
+}
+
+// ---- Badge ----
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  font-family: $font-display;
+  border: 1px solid transparent;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--beginner   { @include difficulty-colors('beginner'); }
+  &--intermediate { @include difficulty-colors('intermediate'); }
+  &--advanced   { @include difficulty-colors('advanced'); }
+
+  &--category {
+    background: rgba($color-accent-2, 0.1);
+    color: $color-accent-2;
+    border-color: rgba($color-accent-2, 0.25);
+  }
+}
+
+// ---- Form inputs ----
+.form-group {
+  @include flex-col;
+  gap: $space-2;
+  margin-bottom: $space-5;
+
+  label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    letter-spacing: 0.03em;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: $space-3 $space-4;
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: $font-size-base;
+  transition: $transition-fast;
+  @include focus-ring;
+
+  &::placeholder { color: $color-text-faint; }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    background: rgba($color-accent, 0.04);
+  }
+
+  &--error {
+    border-color: $color-error;
+    &:focus { border-color: $color-error; }
+  }
+}
+
+// ---- Status messages ----
+.status {
+  padding: $space-3 $space-4;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border: 1px solid transparent;
+
+  &--success {
+    background: $color-success-bg;
+    color: $color-success;
+    border-color: rgba($color-success, 0.3);
+  }
+  &--error {
+    background: $color-error-bg;
+    color: $color-error;
+    border-color: rgba($color-error, 0.3);
+  }
+  &--info {
+    background: rgba($color-accent-2, 0.08);
+    color: $color-accent-2;
+    border-color: rgba($color-accent-2, 0.25);
+  }
+}
+
+// ---- Loading spinner ----
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid $color-border-bright;
+  border-top-color: $color-accent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  &--sm { width: 14px; height: 14px; }
+  &--lg { width: 32px; height: 32px; border-width: 3px; }
+}
+
+// ---- Empty state ----
+.empty-state {
+  @include flex-col;
+  @include flex-center;
+  gap: $space-4;
+  padding: $space-16 $space-8;
+  text-align: center;
+  color: $color-text-muted;
+
+  &__icon {
+    font-size: 3rem;
+    opacity: 0.4;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: $font-size-xl;
+    color: $color-text;
+  }
+
+  &__message {
+    font-size: $font-size-sm;
+    max-width: 360px;
+  }
+}
+
+// ---- Divider ----
+.divider {
+  border: none;
+  border-top: 1px solid $color-border;
+  margin: $space-6 0;
+}
+
+// Animations
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; max-height: 0; }
+  to   { opacity: 1; max-height: 400px; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba($color-accent, 0.2); }
+  50%       { box-shadow: 0 0 24px rgba($color-accent, 0.5); }
+}

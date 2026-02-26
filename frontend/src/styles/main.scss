@@ -1,0 +1,7 @@
+// ============================================================
+// main.scss  — Entry point, imports all partials
+// ============================================================
+@use 'partials/variables' as *;
+@use 'partials/mixins' as *;
+@use 'partials/reset';
+@use 'partials/components';
