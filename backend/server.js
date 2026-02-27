@@ -13,13 +13,20 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false
+  })
+);
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: "https://ciphersqlstudio-ashen.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 };
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
